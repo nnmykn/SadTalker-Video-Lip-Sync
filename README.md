@@ -1,10 +1,7 @@
 # SadTalker-Video-Lip-Sync
 
-<a target="_blank" href="<a target="_blank" href="https://colab.research.google.com/github/https://colab.research.google.com/drive/1PqPhV_MgiPKr729DG9w1B0DW5zaxIkGd?usp=sharing">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
-</a>
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1PqPhV_MgiPKr729DG9w1B0DW5zaxIkGd?usp=sharing)
+
 
 本プロジェクトは、SadTalkersに基づいてWav2lipを実現する動画唇形合成のためのものです。音声駆動で唇形を動画ファイルとして生成し、顔の領域を強化して合成する方法を設定することで、生成された唇形の鮮明度を向上させます。生成された動画に対して、DAIN補間アルゴリズムを使用してフレームを補完し、合成唇形の動きの過渡を補強することで、唇形をよりスムーズでリアルかつ自然に見せます。
 
