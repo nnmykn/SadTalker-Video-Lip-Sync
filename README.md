@@ -1,22 +1,22 @@
 # SadTalker-Video-Lip-Sync
 
 
-本项目基于SadTalkers实现视频唇形合成的Wav2lip。通过以视频文件方式进行语音驱动生成唇形，设置面部区域可配置的增强方式进行合成唇形（人脸）区域画面增强，提高生成唇形的清晰度。使用DAIN 插帧的DL算法对生成视频进行补帧，补充帧间合成唇形的动作过渡，使合成的唇形更为流畅、真实以及自然。
+本プロジェクトは、SadTalkersに基づいてWav2lipを実現する動画唇形合成のためのものです。音声駆動で唇形を動画ファイルとして生成し、顔の領域を強化して合成する方法を設定することで、生成された唇形の鮮明度を向上させます。生成された動画に対して、DAIN補間アルゴリズムを使用してフレームを補完し、合成唇形の動きの過渡を補強することで、唇形をよりスムーズでリアルかつ自然に見せます。
 
-## 1.环境准备(Environment)
+## 1.環境準備 (Environment)
 
 ```python
 pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
 conda install ffmpeg
 pip install -r requirements.txt
 
-#如需使用DAIN模型进行补帧需安装paddle
+# DAINモデルを使用してフレーム補完を行う場合は、paddleをインストール
 # CUDA 11.2
 python -m pip install paddlepaddle-gpu==2.3.2.post112 \
 -f https://www.paddlepaddle.org.cn/whl/linux/mkl/avx/stable.html
 ```
 
-## 2.项目结构(Repository structure)
+## 2.プロジェクト構造 (Repository structure)
 
 ```
 SadTalker-Video-Lip-Sync
@@ -42,40 +42,40 @@ SadTalker-Video-Lip-Sync
 ├──README.md
 ```
 
-## 3.模型推理(Inference)
+## 3.モデル推論 (Inference)
 
 ```python
 python inference.py --driven_audio <audio.wav> \
                     --source_video <video.mp4> \
-                    --enhancer <none,lip,face> \  #(默认lip)
-                    --use_DAIN \ #(使用该功能会占用较大显存和消耗较多时间)
-             		--time_step 0.5 #(插帧频率，默认0.5，即25fps—>50fps;0.25,即25fps—>100fps)
+                    --enhancer <none,lip,face> \  #(デフォルトはlip)
+                    --use_DAIN \ #(この機能を使用すると大量のメモリと時間を消費します)
+                    --time_step 0.5 #(補間フレーム頻度、デフォルトは0.5、つまり25fpsから50fpsへ; 0.25の場合、25fpsから100fpsへ)
 ```
 
 
 
-## 4.合成效果(Results)
+## 4.合成効果 (Results)
 
 ```python
-#合成效果展示在./sync_show目录下：
-#original.mp4 原始视频
-#sync_none.mp4 无任何增强的合成效果
-#none_dain_50fps.mp4 只使用DAIN模型将25fps添帧到50fps
-#lip_dain_50fps.mp4 对唇形区域进行增强使唇形更清晰+DAIN模型将25fps添帧到50fps
-#face_dain_50fps.mp4 对全脸区域进行增强使唇形更清晰+DAIN模型将25fps添帧到50fps
+# 合成効果は./sync_showディレクトリに表示されます：
+# original.mp4 元の動画
+# sync_none.mp4 何も強化されていない合成効果
+# none_dain_50fps.mp4 DAINモデルのみを使用して25fpsを50fpsに補完
+# lip_dain_50fps.mp4 唇形領域を強化して唇形を鮮明にし、DAINモデルを使用して25fpsを50fpsに補完
+# face_dain_50fps.mp4 顔全体の領域を強化して唇形を鮮明にし、DAINモデルを使用して25fpsを50fpsに補完
 
-#下面是不同方法的生成效果的视频
-#our.mp4 本项目SadTalker-Video-Lip-Sync生成的视频
-#sadtalker.mp4 sadtalker生成的full视频
-#retalking.mp4 retalking生成的视频
-#wav2lip.mp4 wav2lip生成的视频
+# 以下は異なる方法で生成された動画の比較です
+# our.mp4 本プロジェクトSadTalker-Video-Lip-Syncで生成された動画
+# sadtalker.mp4 SadTalkerで生成された完全な動画
+# retalking.mp4 ReTalkingで生成された動画
+# wav2lip.mp4 Wav2Lipで生成された動画
 ```
 
 https://user-images.githubusercontent.com/52994134/231769817-8196ef1b-c341-41fa-9b6b-63ad0daf14ce.mp4
 
-视频拼接到一起导致帧数统一到25fps了，插帧效果看不出来区别，具体细节可以看./sync_show目录下的单个视频进行比较。
+動画を結合するとフレーム数が25fpsに統一されるため、補間効果の違いは分かりません。具体的な詳細は./sync_showディレクトリ内の個別動画を比較してください。
 
-**本项目和sadtalker、retalking、wav2lip唇形合成的效果比较：**
+**本プロジェクトとSadTalker、ReTalking、Wav2Lipの唇形合成の効果比較：**
 
 |                           **our**                            |                        **sadtalker**                         |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
@@ -83,11 +83,11 @@ https://user-images.githubusercontent.com/52994134/231769817-8196ef1b-c341-41fa-
 |                        **retalking**                         |                         **wav2lip**                          |
 | <video  src="https://user-images.githubusercontent.com/52994134/233003982-2fe1b33c-b455-4afc-ab50-f6b40070e2ca.mp4" type="video/mp4"> </video> | <video  src="https://user-images.githubusercontent.com/52994134/233003990-2f8c4b84-dc74-4dc5-9dad-a8285e728ecb.mp4" type="video/mp4"> </video> |
 
-readme中展示视频做了resize，原始视频可以看./sync_show目录下不同类别合成的视频进行比较。
+READMEで表示されている動画はリサイズされています。元の動画は./sync_showディレクトリ内の異なるカテゴリの合成動画を比較してください。
 
-## 5.预训练模型（Pretrained model）
+## 5.事前学習済みモデル (Pretrained model)
 
-预训练的模型如下所示：
+事前学習済みモデルは以下の通りです：
 
 ```python
 ├──checkpoints
@@ -107,16 +107,12 @@ readme中展示视频做了resize，原始视频可以看./sync_show目录下不
 |   ├──wav2lip.pth
 ```
 
-预训练的模型checkpoints下载路径:
+事前学習済みモデルのチェックポイントダウンロードパス：
 
-百度网盘：https://pan.baidu.com/s/15-zjk64SGQnRT9qIduTe2A  提取码：klfv
-
-谷歌网盘：https://drive.google.com/file/d/1lW4mf5YNtS4MAD7ZkAauDDWp2N3_Qzs7/view?usp=sharing
-
-夸克网盘：https://pan.quark.cn/s/2a1042b1d046  提取码：zMBP
+Google Drive：https://drive.google.com/file/d/1iS4LzBOxXUZs0r9hEGs9OIFgbH6ygAUh/view?usp=sharing
 
 ```python
-#下载压缩包后解压到项目路径（谷歌网盘和夸克网盘下载的需要执行）
+# ダウンロードした圧縮ファイルをプロジェクトのパスに解凍します（GoogleドライブおよびQuark网盘からダウンロードした場合は実行が必要です）
 cd SadTalker-Video-Lip-Sync
 tar -zxvf checkpoints.tar.gz
 ```
